@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <node name ="kunsan" pkg="ros_name" type ="talker.py" output ="screen"></node>
+    <node name = "heewon" pkg = "ros_name" type = "listener.py" output ="screen"></node>
+</launch>
+

@@ -1,0 +1,8 @@
+<launch>
+    <node pkg = "topic_tutorial_2" type ="Pub_node2.py" name = "Pub_node2"/>
+
+    <node pkg = "topic_tutorial_2" type = "Sub_node2.py" name = "sub_node2"/>
+   
+
+    <node name = "rqt_gui" pkg = "rqt_gui" type = "rqt_gui"/>
+</launch>
