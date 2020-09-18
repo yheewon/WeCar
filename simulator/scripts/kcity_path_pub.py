@@ -51,7 +51,6 @@ class velocityPlanning :
             out_vel_plan.append(self.car_max_speed)
         return out_vel_plan
 
-#유효장애물 판단 
 # class vaildObject :
 
 #     def __init__(self):
@@ -203,7 +202,7 @@ class velocityPlanning :
         #         out_vel=target_vel
 
 
-#         return out_vel
+        return out_vel
          
 
 
@@ -248,8 +247,8 @@ class path_pub_tf :
         vel_planner=velocityPlanning(60,0.15)
         vel_profile=vel_planner.curveBasedVelocity(self.global_path_msg,100)
 
-        vaild_obj=vaildObject()
-        cruise_control=cruiseControl(1,0.5)
+        # vaild_obj=vaildObject()
+        # cruise_control=cruiseControl(1,0.5)
 
     
 
@@ -271,23 +270,33 @@ class path_pub_tf :
                         min_dis=distance
                         current_waypoint=i
 
+                for j in range(current_waypoint,current_waypoint+100):
+                    tmp_pose=PoseStamped()
+                    tmp_pose.pose.position.x=self.global_path_msg.poses[j].pose.position.x
+                    tmp_pose.pose.position.y=self.global_path_msg.poses[j].pose.position.y
+                    tmp_pose.pose.orientation.w=1
+                    local_path_msg.poses.append(tmp_pose)
+
+
+            
+
                 
-                if current_waypoint != -1 :
-                    if current_waypoint + self.local_path_size < len(self.global_path_msg.poses):
-                        for num in range(current_waypoint,current_waypoint + self.local_path_size ) :
-                            tmp_pose=PoseStamped()
-                            tmp_pose.pose.position.x=self.global_path_msg.poses[num].pose.position.x
-                            tmp_pose.pose.position.y=self.global_path_msg.poses[num].pose.position.y
-                            tmp_pose.pose.orientation.w=1
-                            local_path_msg.poses.append(tmp_pose)
+                # if current_waypoint != -1 :
+                #     if current_waypoint + self.local_path_size < len(self.global_path_msg.poses):
+                #         for num in range(current_waypoint,current_waypoint + self.local_path_size ) :
+                #             tmp_pose=PoseStamped()
+                #             tmp_pose.pose.position.x=self.global_path_msg.poses[num].pose.position.x
+                #             tmp_pose.pose.position.y=self.global_path_msg.poses[num].pose.position.y
+                #             tmp_pose.pose.orientation.w=1
+                #             local_path_msg.poses.append(tmp_pose)
                     
-                    else :
-                        for num in range(current_waypoint,len(self.global_path_msg.poses) ) :
-                            tmp_pose=PoseStamped()
-                            tmp_pose.pose.position.x=self.global_path_msg.poses[num].pose.position.x
-                            tmp_pose.pose.position.y=self.global_path_msg.poses[num].pose.position.y
-                            tmp_pose.pose.orientation.w=1
-                            local_path_msg.poses.append(tmp_pose)
+                #     else :
+                #         for num in range(current_waypoint,len(self.global_path_msg.poses) ) :
+                #             tmp_pose=PoseStamped()
+                #             tmp_pose.pose.position.x=self.global_path_msg.poses[num].pose.position.x
+                #             tmp_pose.pose.position.y=self.global_path_msg.poses[num].pose.position.y
+                #             tmp_pose.pose.orientation.w=1
+                #             local_path_msg.poses.append(tmp_pose)
 
 
                 vel_msg=Float64()
@@ -296,11 +305,11 @@ class path_pub_tf :
        
                 
 
-                vaild_obj.get_object(self.object_info_msg)
-                global_vaild_object,local_vaild_object=vaild_obj.calc_vaild_obj([self.x,self.y,self.heading])
-                cruise_control.checkObject(local_path_msg,global_vaild_object,local_vaild_object)
-                target_vel=cruise_control.acc(local_vaild_object,self.speed,target_vel)
-                print(local_vaild_object)
+                # vaild_obj.get_object(self.object_info_msg)
+                # global_vaild_object,local_vaild_object=vaild_obj.calc_vaild_obj([self.x,self.y,self.heading])
+                # cruise_control.checkObject(local_path_msg,global_vaild_object,local_vaild_object)
+                # target_vel=cruise_control.acc(local_vaild_object,self.speed,target_vel)
+                # print(local_vaild_object)
 
 
 
