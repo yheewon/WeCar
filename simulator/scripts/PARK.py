@@ -110,7 +110,7 @@ class simple_controller:
             motor_msg.data = 1000
 
             if count >= 70 : 
-                motor_msg.data = -1000
+                motor_msg.data = 0
                 servo_value = 0.5304
 
             
